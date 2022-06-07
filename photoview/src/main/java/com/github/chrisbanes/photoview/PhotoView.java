@@ -253,4 +253,8 @@ public class PhotoView extends AppCompatImageView {
     public void setOnSingleFlingListener(OnSingleFlingListener onSingleFlingListener) {
         attacher.setOnSingleFlingListener(onSingleFlingListener);
     }
+
+    public void setSingleTouchDragEnabled(boolean enabled) {
+        attacher.setSingleTouchDragEnabled(enabled);
+    }
 }
