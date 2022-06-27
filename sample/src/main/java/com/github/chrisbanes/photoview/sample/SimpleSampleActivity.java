@@ -132,6 +132,8 @@ public class SimpleSampleActivity extends AppCompatActivity {
         mPhotoView = findViewById(R.id.iv_photo);
         mCurrMatrixTv = findViewById(R.id.tv_current_matrix);
 
+        mPhotoView.setSingleTouchDragEnabled(false);
+
         Drawable bitmap = ContextCompat.getDrawable(this, R.drawable.wallpaper);
         mPhotoView.setImageDrawable(bitmap);
 
@@ -165,7 +167,8 @@ public class SimpleSampleActivity extends AppCompatActivity {
     private class MatrixChangeListener implements OnMatrixChangedListener {
 
         @Override
-        public void onMatrixChanged(RectF rect) {
+        public void onMatrixChanged(RectF rect, boolean byUserAction) {
+            Log.d("PhotoViewUserActions", "" + byUserAction);
             mCurrMatrixTv.setText(rect.toString());
         }
     }

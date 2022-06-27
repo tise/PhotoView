@@ -63,6 +63,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     private boolean mAllowParentInterceptOnEdge = true;
     private boolean mBlockParentIntercept = false;
     private boolean mSingleTouchDragEnabled = true;
+    private boolean mUserActionsDetected = false;
 
     private ImageView mImageView;
 
@@ -358,6 +359,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
                     break;
                 case MotionEvent.ACTION_MOVE:
                     if (!mSingleTouchDragEnabled) {
+                        mUserActionsDetected = true;
                         ViewParent parent2 = v.getParent();
                         if (ev.getPointerCount() < 2) {
                             // First, enable the Parent from intercepting the touch
@@ -437,6 +439,14 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         mMinScale = minimumScale;
         mMidScale = mediumScale;
         mMaxScale = maximumScale;
+    }
+
+    public void enableUserActionsDetected() {
+        mUserActionsDetected = true;
+    }
+
+    private void resetUserActionsDetected() {
+        mUserActionsDetected = false;
     }
 
     public void setOnLongClickListener(OnLongClickListener listener) {
@@ -519,6 +529,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     }
 
     public void update() {
+        resetUserActionsDetected();
         if (mZoomEnabled) {
             // Update the base matrix using the current drawable
             updateBaseMatrix(mImageView.getDrawable());
@@ -586,7 +597,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         if (mMatrixChangeListener != null) {
             RectF displayRect = getDisplayRect(matrix);
             if (displayRect != null) {
-                mMatrixChangeListener.onMatrixChanged(displayRect);
+                mMatrixChangeListener.onMatrixChanged(displayRect, mUserActionsDetected);
             }
         }
     }

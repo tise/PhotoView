@@ -14,5 +14,5 @@ public interface OnMatrixChangedListener {
      *
      * @param rect - Rectangle displaying the Drawable's new bounds.
      */
-    void onMatrixChanged(RectF rect);
+    void onMatrixChanged(RectF rect, boolean byUserAction);
 }
