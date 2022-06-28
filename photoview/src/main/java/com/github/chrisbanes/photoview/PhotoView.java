@@ -16,6 +16,7 @@
 package com.github.chrisbanes.photoview;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -101,10 +102,20 @@ public class PhotoView extends AppCompatImageView {
     }
 
     @Override
+    public void setImageBitmap(Bitmap bm) {
+        super.setImageBitmap(bm);
+        if (attacher != null) {
+            attacher.resetUserActionsDetected();
+            attacher.update();
+        }
+    }
+
+    @Override
     public void setImageDrawable(Drawable drawable) {
         super.setImageDrawable(drawable);
         // setImageBitmap calls through to this method
         if (attacher != null) {
+            attacher.resetUserActionsDetected();
             attacher.update();
         }
     }
@@ -113,6 +124,7 @@ public class PhotoView extends AppCompatImageView {
     public void setImageResource(int resId) {
         super.setImageResource(resId);
         if (attacher != null) {
+            attacher.resetUserActionsDetected();
             attacher.update();
         }
     }
@@ -121,6 +133,7 @@ public class PhotoView extends AppCompatImageView {
     public void setImageURI(Uri uri) {
         super.setImageURI(uri);
         if (attacher != null) {
+            attacher.resetUserActionsDetected();
             attacher.update();
         }
     }

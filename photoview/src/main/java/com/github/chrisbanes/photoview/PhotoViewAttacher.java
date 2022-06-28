@@ -445,7 +445,7 @@ public class PhotoViewAttacher implements View.OnTouchListener,
         mUserActionsDetected = true;
     }
 
-    private void resetUserActionsDetected() {
+    protected void resetUserActionsDetected() {
         mUserActionsDetected = false;
     }
 
@@ -529,7 +529,6 @@ public class PhotoViewAttacher implements View.OnTouchListener,
     }
 
     public void update() {
-        resetUserActionsDetected();
         if (mZoomEnabled) {
             // Update the base matrix using the current drawable
             updateBaseMatrix(mImageView.getDrawable());
